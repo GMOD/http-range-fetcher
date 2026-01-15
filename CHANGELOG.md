@@ -1,3 +1,7 @@
+## [5.0.7](https://github.com/rbuels/http-range-fetcher/compare/v5.0.6...v5.0.7) (2026-01-15)
+
+
+
 ## [5.0.6](https://github.com/rbuels/http-range-fetcher/compare/v5.0.5...v5.0.6) (2025-12-20)
 
 ## [5.0.5](https://github.com/rbuels/http-range-fetcher/compare/v5.0.3...v5.0.5) (2025-12-17)
