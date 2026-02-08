@@ -37,7 +37,7 @@ async function defaultFetch(
  */
 function is416Exception(exception: unknown) {
   return (
-    exception instanceof Error && !!exception.message.match(/\bHTTP 416\b/)
+    exception instanceof Error && !!(/\bHTTP 416\b/.exec(exception.message))
   )
 }
 
