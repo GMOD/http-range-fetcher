@@ -31,6 +31,17 @@ async function defaultFetch(
 }
 
 /**
+ * check if the given exception was caused by a range request entirely beyond
+ * the end of the file (HTTP 416 Range Not Satisfiable). this can happen when
+ * fixed-size chunking creates a sub-request past EOF.
+ */
+function is416Exception(exception: unknown) {
+  return (
+    exception instanceof Error && !!exception.message.match(/\bHTTP 416\b/)
+  )
+}
+
+/**
  * check if the given exception was caused by an operation being intentionally aborted
  */
 function isAbortException(exception: any) {
@@ -173,6 +184,12 @@ export class HttpRangeFetcher {
       ) as Promise<ChunkResponse>
     ).catch((err: unknown) => {
       this._uncacheIfSame(chunkKey, freshPromise)
+      if (is416Exception(err)) {
+        console.warn(
+          `[http-range-fetcher] HTTP 416 for chunk ${chunkNumber} (bytes ${fetchStart}-${fetchEnd}), range is beyond EOF`,
+        )
+        return undefined as unknown as ChunkResponse
+      }
       throw err
     })
 
