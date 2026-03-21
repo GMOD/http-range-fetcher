@@ -20,8 +20,11 @@ async function defaultFetch(
     ...options,
   })
   if (res.status !== 206) {
-    throw new Error(
-      `HTTP ${res.status} when fetching ${url} bytes ${start}-${end}`,
+    throw Object.assign(
+      new Error(
+        `HTTP ${res.status} when fetching ${url} bytes ${start}-${end}`,
+      ),
+      { status: res.status },
     )
   }
   return {
@@ -37,7 +40,8 @@ async function defaultFetch(
  */
 function is416Exception(exception: unknown) {
   return (
-    exception instanceof Error && !!(/\bHTTP 416\b/.exec(exception.message))
+    exception instanceof Error &&
+    (exception as Error & { status?: number }).status === 416
   )
 }
 

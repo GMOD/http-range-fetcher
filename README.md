@@ -19,7 +19,7 @@ that behavior off by setting `minimumTTL` to 0 though.
 ## Usage
 
 ```js
-const { HttpRangeFetcher } = require('http-range-fetcher')
+import { HttpRangeFetcher } from 'http-range-fetcher'
 
 const cache = new HttpRangeFetcher({})
 cache.getRange('http://foo.bar/baz.bam', 20, 10).then(response => {
