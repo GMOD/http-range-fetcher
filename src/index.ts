@@ -48,11 +48,14 @@ function is416Exception(exception: unknown) {
 /**
  * check if the given exception was caused by an operation being intentionally aborted
  */
-function isAbortException(exception: any) {
+function isAbortException(exception: unknown) {
+  if (!(exception instanceof Error)) {
+    return false
+  }
   return (
     exception.name === 'AbortError' ||
-    exception.code === 'ERR_ABORTED' ||
-    !!exception.message?.match(/\b(aborted|AbortError)\b/i)
+    ('code' in exception && exception.code === 'ERR_ABORTED') ||
+    /\b(aborted|AbortError)\b/i.test(exception.message)
   )
 }
 

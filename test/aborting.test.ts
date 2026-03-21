@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { expect, it } from 'vitest'
 
 import { HttpRangeFetcher } from '../src/index.ts'
